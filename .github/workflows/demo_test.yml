@@ -1,9 +1,9 @@
 name: Demo Test wf
 on: workflow_dispatch
 
-  jobs:
-    demo_jobs:
-      runs-on: ubuntu-latest
+jobs:
+  demo_jobs:
+    runs-on: ubuntu-latest
       steps:
         - name: Print the message 
           run: echo "Hello GitHub Actions ..........."
@@ -11,8 +11,8 @@ on: workflow_dispatch
         - name: Print new message
           run: echo "Hello Terraform deployment....."
 
-    demo_jobs2:
-      runs-on: ubuntu-latest
+  demo_jobs2:
+    runs-on: ubuntu-latest
       steps:
         - name: Second Job Print the message 
           run: echo "Hello GitHub Actions Job2 ..........."
