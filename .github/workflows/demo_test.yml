@@ -5,13 +5,43 @@ jobs:
   demo_jobs:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Python 
+        uses: actions/setup-python@v5
+
+      - name: Install dependencies # Example step for installing Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt # Assuming you have a requirements.txt file
+
+      - name: Run tests # Example step for running tests
+        run: |
+          pytest # Replace with your test command
+        
       - name: Print the message 
-        run: echo "Hello GitHub Actions ..........."
+        run: |
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          echo "Hello GitHub Actions ..........."
+          
 
       - name: Print new message
-        run: echo "Hello Terraform deployment....."
+        run: |
+          echo "Hello Terraform deployment....."
+          echo "Hello Terraform deployment....."
+          echo "Hello Terraform deployment....."
+          echo "Hello Terraform deployment....."
+          echo "Hello Terraform deployment....."
+          echo "Hello Terraform deployment....."
 
   demo_jobs2:
+    needs: demo_jobs
     runs-on: ubuntu-latest
     steps:
       - name: Second Job Print the message 
