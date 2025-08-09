@@ -4,7 +4,8 @@ on:
     branches:
       - main
   workflow_dispatch:
-
+  issues:
+    - open
 jobs:
   demo_jobs:
     runs-on: ubuntu-latest
