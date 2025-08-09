@@ -3,9 +3,10 @@ on:
   push: 
     branches:
       - main
-  workflow_dispatch:
   issues:
-    - open
+    - open   
+  workflow_dispatch:
+  
 jobs:
   demo_jobs:
     runs-on: ubuntu-latest
