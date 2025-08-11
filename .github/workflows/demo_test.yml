@@ -9,6 +9,12 @@ jobs:
   demo_jobs:
     runs-on: ubuntu-latest
     steps:    
+      - name: Login to Azure Subscription
+      - uses: actions/checkout@v3
+      - uses: azure/login@v2
+        with:
+            client-id: ${{ secrets.AZURE_CLIENT_ID }}
+
       - name: Create the inline script
         uses: Azure/cli@v1
         with:
@@ -16,7 +22,10 @@ jobs:
           inlineScript: |
             az version
             az group create --name test-wf-01-rg --location eastus
-            
+            EOT
+      - name: Code check out 
+        uses: actions/checkout@v3
+        
       - name: Print the message 
         run: |
           echo "Hello GitHub Actions ..........."
