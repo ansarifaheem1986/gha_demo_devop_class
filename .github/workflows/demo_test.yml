@@ -3,14 +3,19 @@ on:
   push: 
     branches:
       - main
-  issues:
-    - opened   
   workflow_dispatch:
   
 jobs:
   demo_jobs:
     runs-on: ubuntu-latest
-    steps:      
+    steps:    
+      - name: Create the inline script
+        uses: Azure/cli@V1.0.6
+        with:
+          inlineScript: |
+            az version
+            az group create --name test-wf-01-rg --location eastus
+            
       - name: Print the message 
         run: |
           echo "Hello GitHub Actions ..........."
