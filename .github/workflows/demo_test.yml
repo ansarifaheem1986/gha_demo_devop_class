@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
       - name: Create the inline script
-        uses: Azure/cli@V1
+        uses: Azure/cli@v1
         with:
           azcliversion: 2.75.0
           inlineScript: |
