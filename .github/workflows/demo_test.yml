@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:    
       - name: Create the inline script
-        uses: Azure/cli@V1.0.6
+        uses: Azure/cli@V1
         with:
+          azcliversion: 2.75.0
           inlineScript: |
             az version
             az group create --name test-wf-01-rg --location eastus
