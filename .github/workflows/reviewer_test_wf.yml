@@ -1,0 +1,22 @@
+name: Required Reviewer Environment Example 
+on: workflow_dispatch
+
+jobs:
+  review-en-job:
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+    steps:
+      - name: Printing the review message  
+        run: |
+          echo "Start reviewing the code on GitHub"
+          echo "Waiting for the approval"
+          echo "......................."
+          echo "Start reviewing the code on GitHub"
+          echo "Waiting for the approval"
+          echo "......................."
+
+          
+
+          
+        
