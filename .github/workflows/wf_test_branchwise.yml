@@ -4,6 +4,16 @@ on:
     branches:
       - workflow_test_branchwise/main
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select the Correct Subscription'
+        required: true
+        #default: 'production'
+        type: choice
+        options:
+          - production
+          - testing
+          - development
 jobs:
   review-en-job:
     runs-on: ubuntu-latest
