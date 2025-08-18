@@ -14,8 +14,35 @@ on:
           - production
           - testing
           - development
+      branch:
+        description: "Target branch for deployment"
+        required: true
+        default: main
+
 jobs:
+  validate-input:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate environment and branch
+        run: |
+          echo "Selected environment: ${{ github.event.inputs.environmet }}"
+          echo "Selected branch: ${{ github.event.inputs.branch }}"
+
+          if [[ "${{ github.event.inputs.environment }}" == "dev" && "${{ github.event.inputs.branch }}" != "develop" ]]; then
+            echo "Dev deployments must come from 'develop' branch."
+            exit 1
+          fi
+          if [[ "${{ github.event.inputs.environment }}" == "test" && "${{ github.event.inputs.branch }}" != "release" ]]; then
+            echo "Test deployments must come from 'release' branch."
+            exit 1
+          fi
+          if [[ "${{ github.event.inputs.environment }}" == "prod" && "${{ github.event.inputs.branch }}" != "main" ]]; then
+            echo "Prod deployments must come from 'main' branch."
+            exit 1
+          fi
+  
   review-en-job:
+    needs: validate-input
     runs-on: ubuntu-latest
     environment:
       name: prod
