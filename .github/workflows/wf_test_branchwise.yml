@@ -45,7 +45,8 @@ jobs:
     needs: validate-input
     runs-on: ubuntu-latest
     environment:
-      name: prod
+      #name: prod
+      name: ${{ github.event.inputs.environment }}
     steps:
       - name: Printing the review message  
         run: |
