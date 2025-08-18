@@ -1,8 +1,8 @@
 name: Required Reviewer Environment with workflow branch-wise testing
 on: 
   push:
-    branches:
-      - workflow_test_branchwise/main
+    #branches:
+     # - workflow_test_branchwise/main
   workflow_dispatch:
     inputs:
       environment:
@@ -17,7 +17,7 @@ on:
       branch:
         description: "Target branch for deployment"
         required: true
-        default: main
+        #default: main
 
 jobs:
   validate-input:
@@ -40,7 +40,66 @@ jobs:
             echo "Prod deployments must come from 'main' branch."
             exit 1
           fi
-  
+          
+  terraform-plan:
+    needs: validate-input
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      - name: Upload Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: tfplan
+
+  approval-job:
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+    environment:
+      # This triggers environment reviewers configured in repo → Settings → Environments
+      name: ${{ github.event.inputs.environment }}
+    steps:
+      - name: Review Instructions
+        run: |
+          echo "Terraform plan is ready for review."
+          echo "✅ Approvers for ${{ github.event.inputs.environment }} must check the plan artifact."
+          echo "Plan artifact can be downloaded from workflow run → Artifacts."
+          echo "Approve if the plan is correct, reject if not."
+
+  terraform-apply:
+    needs: approval-job
+    runs-on: ubuntu-latest
+    if: ${{ success() }} # only runs if approval-job is approved
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Download Plan Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: .
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
+
   review-en-job:
     needs: validate-input
     runs-on: ubuntu-latest
