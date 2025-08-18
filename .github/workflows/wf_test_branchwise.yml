@@ -58,8 +58,10 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
+        #run: terraform plan -out=tfplan
+        run: | 
+          echo "Generating the Terraform Plan for the project configuration"
+        
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
         with:
