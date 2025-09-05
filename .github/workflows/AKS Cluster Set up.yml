@@ -1,12 +1,9 @@
 name: AKS Cluster Set-up Env
-"
-"
 # Changelog
 # - Jobs separated based on environment for approvals
 # - Prod context uses Azure actions
 # - Streamline jobs
-"
-"
+
 on:
   workflow_dispatch:
     inputs:
