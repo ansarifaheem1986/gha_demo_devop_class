@@ -50,8 +50,7 @@ on:
         type: string
         description: Please enter the SecretProviderClass NAME (the name field inside of the file)
         required: false
-"
-"
+        
 # If using for another project, please replace your resource group and AKS names HERE
 env:
   NP_RG_EAUS: ct-n-zeaus-loyprofmgr-rg
@@ -60,8 +59,7 @@ env:
   NP_AKS_EAUS: ct-n-zeaus-loyprofmgr-aks
   P_AKS_EAUS: ct-p-zeaus-loyprofmgr-aks
   P_AKS_WEUS: ct-p-zweus-loyprofmgr-aks
-"
-"
+
 jobs:
   aks-cluster-setup-np:
     name: 'Setting up AKS in [${{ inputs.environment }}] [${{ inputs.location }}]'
